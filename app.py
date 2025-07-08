@@ -88,7 +88,9 @@ def render_results(results):
     
     metrics = [
         (results['match_score'], "Overall Match", "#667eea"),
-        (results['skill_match_percentage'], "Skill Match", "#28a745"),
+        # (results['skill_match_percentage'], "Skill Match", "#28a745"),
+        (results.get('skill_match_percentage', 0), "Skill Match", "#28a745"),
+
         (len(results['matched_skills']), "Matched Skills", "#17a2b8"),
         (len(results['missing_skills']), "Missing Skills", "#dc3545")
     ]
