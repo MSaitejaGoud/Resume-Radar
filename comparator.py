@@ -1,11 +1,9 @@
 import cohere
 import re
 import numpy as np
-import os
-from dotenv import load_dotenv
+import streamlit as st
 
-load_dotenv()
-api_key = os.getenv("API_KEY")
+api_key = st.secrets["API_KEY"]
 co = cohere.Client(api_key)
 
 def compare_resume_with_jd(resume_text, jd_text):
