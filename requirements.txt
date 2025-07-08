@@ -1,0 +1,6 @@
+streamlit==1.28.1
+PyPDF2
+cohere
+numpy
+plotly
+python-dotenv
