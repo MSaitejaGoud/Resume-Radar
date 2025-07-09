@@ -51,23 +51,12 @@ def load_css():
     """, unsafe_allow_html=True)
 
 def render_header():
-    theme_text = "🌙" if not st.session_state.light_theme else "☀️"
-
-    st.markdown(f'''
+    st.markdown('''
     <div class="main-header" style="position: relative; margin-top: 1rem;">
-        <div style="position: absolute; top: 20px; right: 25px; font-size: 20px; cursor: pointer; z-index: 10; background: rgba(255,255,255,0.2); padding: 8px; border-radius: 50%; backdrop-filter: blur(10px);">
-            {theme_text}
-        </div>
-        <h1> Resume Radar Pro</h1>
+        <h1>🎯 Resume Radar Pro</h1>
         <p>AI-Powered Resume Analysis & Job Matching Platform</p>
     </div>
     ''', unsafe_allow_html=True)
-
-    col1, col2, col3 = st.columns([1, 6, 1])
-    with col3:
-        if st.button("🔄", help="Toggle Theme", key="theme_btn"):
-            st.session_state.light_theme = not st.session_state.light_theme
-            st.rerun()
 
 def render_upload_section():
     col1, col2 = st.columns(2)
