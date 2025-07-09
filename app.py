@@ -9,17 +9,38 @@ if 'light_theme' not in st.session_state:
     st.session_state.light_theme = False
 
 def load_css():
-    theme_css = """
-    <style>
-    .stApp { background-color: #ffffff; color: #000000; }
-    ...
-    </style>
-    """ if st.session_state.light_theme else """
-    <style>
-    .stApp { background-color: #0e1117; color: #ffffff; }
-    ...
-    </style>
-    """
+    if st.session_state.light_theme:
+        theme_css = """
+        <style>
+        .stApp { background-color: #ffffff; color: #000000; }
+        .main-header { text-align: center; padding: 2rem 0; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px; margin-bottom: 2rem; }
+        .metric-card { background: #f8f9fa; color: #000000; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; margin: 1rem 0; border: 1px solid #dee2e6; }
+        .upload-card { background: #f8f9fa; color: #000000; padding: 2rem; border-radius: 10px; border: 2px dashed #dee2e6; text-align: center; margin: 1rem 0; min-height: 200px; }
+        .upload-card h3, .upload-card p { color: #000000 !important; }
+        .stFileUploader label, .stTextArea label { color: #000000 !important; }
+        .stFileUploader div[data-testid="stFileUploadDropzone"] { background-color: #ffffff !important; border: 2px dashed #007bff !important; color: #000000 !important; }
+        .stTextArea textarea { background-color: #ffffff !important; color: #000000 !important; border: 1px solid #dee2e6 !important; }
+        .matched-skill { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .missing-skill { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .stButton > button { background: linear-gradient(90deg, #667eea 0%, #764ba2 100%) !important; color: white !important; border: none !important; border-radius: 25px !important; padding: 0.75rem 2rem !important; font-weight: 600 !important; font-size: 16px !important; }
+        </style>
+        """
+    else:
+        theme_css = """
+        <style>
+        .stApp { background-color: #0e1117; color: #ffffff; }
+        .main-header { text-align: center; padding: 2rem 0; background: linear-gradient(90deg, #1f4e79 0%, #2d1b69 100%); color: white; border-radius: 10px; margin-bottom: 2rem; }
+        .metric-card { background: #262730; color: #ffffff; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); text-align: center; margin: 1rem 0; border: 1px solid #404040; }
+        .upload-card { background: #262730; color: #ffffff; padding: 2rem; border-radius: 10px; border: 2px dashed #404040; text-align: center; margin: 1rem 0; min-height: 200px; }
+        .upload-card h3, .upload-card p { color: #ffffff !important; }
+        .stFileUploader label, .stTextArea label { color: #ffffff !important; }
+        .stFileUploader div[data-testid="stFileUploadDropzone"] { background-color: #1e1e1e !important; border: 2px dashed #ffc107 !important; color: #ffffff !important; }
+        .stTextArea textarea { background-color: #1e1e1e !important; color: #ffffff !important; border: 1px solid #404040 !important; }
+        .matched-skill { background: #1e4620; color: #4caf50; border: 1px solid #2e7d32; }
+        .missing-skill { background: #4a1e1e; color: #f44336; border: 1px solid #d32f2f; }
+        .stButton > button { background: linear-gradient(90deg, #1f4e79 0%, #2d1b69 100%) !important; color: white !important; border: none !important; border-radius: 25px !important; padding: 0.75rem 2rem !important; font-weight: 600 !important; font-size: 16px !important; }
+        </style>
+        """
     
     st.markdown(theme_css + """
     <style>
@@ -87,6 +108,8 @@ def render_results(results):
             st.markdown("**✅ Skills You Have:**")
             skills_html = "".join([f'<span class="skill-tag matched-skill">{skill.title()}</span>' for skill in results['matched_skills']])
             st.markdown(skills_html, unsafe_allow_html=True)
+        else:
+            st.warning("⚠️ No matching skills found between your resume and this job description.")
 
         st.markdown("<br>", unsafe_allow_html=True)
 
@@ -94,6 +117,8 @@ def render_results(results):
             st.markdown("**❌ Skills to Develop:**")
             skills_html = "".join([f'<span class="skill-tag missing-skill">{skill.title()}</span>' for skill in results['missing_skills'][:10]])
             st.markdown(skills_html, unsafe_allow_html=True)
+        else:
+            st.success("🎉 Amazing! You have all the required skills for this position!")
 
         st.markdown("<br><br>", unsafe_allow_html=True)
 
